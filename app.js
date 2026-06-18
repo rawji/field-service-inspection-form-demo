@@ -20,12 +20,22 @@ const completionChip = document.getElementById("completion-chip");
 const followUpAlert = document.getElementById("follow-up-alert");
 const submitSummary = document.getElementById("submit-summary");
 const stickySubmit = document.getElementById("sticky-submit");
+const draftStatus = document.getElementById("draft-status");
+const loadSampleBtn = document.getElementById("load-sample-btn");
+const clearFormBtn = document.getElementById("clear-form-btn");
+const copyJsonBtn = document.getElementById("copy-json-btn");
+const newInspectionBtn = document.getElementById("new-inspection-btn");
+
+const DRAFT_STORAGE_KEY = "fs-inspection-draft-v1";
+let draftSaveTimer = null;
+let lastSubmission = null;
 
 const FORM_STEPS = [
-  { id: "job-details", label: "Job Details", sectionIndex: 0 },
-  { id: "equipment", label: "Equipment", sectionIndex: 1 },
-  { id: "checklist", label: "Checklist", sectionIndex: 2 },
-  { id: "assessment", label: "Assessment", sectionIndex: 3 },
+  { id: "job-details", label: "Job Details" },
+  { id: "equipment", label: "Equipment" },
+  { id: "checklist", label: "Checklist" },
+  { id: "assessment", label: "Assessment" },
+  { id: "signoff", label: "Sign-Off" },
 ];
 
 const FORM_SECTIONS = [
@@ -50,6 +60,14 @@ const FORM_SECTIONS = [
     twoColumn: false,
     fieldIds: ["conditionRating", "priority", "technicianNotes", "photoRequired"],
   },
+  {
+    step: "Step 5",
+    title: "Customer Sign-Off",
+    description: "Confirm work completion before closing the inspection",
+    twoColumn: false,
+    fieldIds: ["customerSignoffName", "workCompletedConfirmed"],
+    signoff: true,
+  },
 ];
 
 /**
@@ -59,7 +77,7 @@ const FORM_SECTIONS = [
 const EMBEDDED_SCHEMA = {
   formId: "field-service-inspection",
   formTitle: "Field Service Inspection",
-  version: "1.1.0",
+  version: "1.2.0",
   demoJob: {
     workOrder: "WO-20481",
     status: "In Progress",
@@ -166,6 +184,21 @@ const EMBEDDED_SCHEMA = {
       type: "checkbox",
       required: false,
     },
+    {
+      id: "customerSignoffName",
+      label: "Customer Sign-Off Name",
+      type: "text",
+      required: true,
+      placeholder: "Name of person approving completed work",
+      validation: { minLength: 2, message: "Customer sign-off name is required." },
+    },
+    {
+      id: "workCompletedConfirmed",
+      label: "Customer confirms work was completed satisfactorily",
+      type: "checkbox",
+      required: true,
+      validation: { message: "Customer sign-off confirmation is required to close this inspection." },
+    },
   ],
   checklist: {
     id: "inspectionChecklist",
@@ -185,6 +218,28 @@ const EMBEDDED_SCHEMA = {
       { id: "emergencyStop", label: "Emergency stop tested" },
       { id: "serviceAreaClear", label: "Service area clear" },
     ],
+  },
+  sampleData: {
+    fields: {
+      customerName: "Summit Industrial Services",
+      jobSiteLocation: "1200 Harbor Way, Building C — Seattle, WA",
+      technicianName: "Jordan Ellis",
+      equipmentType: "hvac",
+      inspectionType: "preventive-maintenance",
+      conditionRating: "needs-attention",
+      priority: "medium",
+      technicianNotes: "Filter replaced. Minor vibration on blower motor — recommend bearing inspection within 30 days.",
+      photoRequired: true,
+      customerSignoffName: "Alex Morgan",
+      workCompletedConfirmed: true,
+    },
+    checklist: {
+      powersOn: "pass",
+      noVisibleDamage: "pass",
+      safetyGuards: "pass",
+      emergencyStop: "pass",
+      serviceAreaClear: "na",
+    },
   },
 };
 
@@ -472,6 +527,7 @@ function renderTriStateChecklist(checklist) {
 function createFormSection(sectionConfig, checklistTotal = 0) {
   const section = document.createElement("section");
   section.className = "form-section";
+  if (sectionConfig.signoff) section.classList.add("form-section--signoff");
   section.id = `section-${sectionConfig.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 
   const header = document.createElement("div");
@@ -552,6 +608,15 @@ function renderForm(schema) {
   });
   container.appendChild(section);
 
+  const signoffSection = FORM_SECTIONS[3];
+  const signoff = createFormSection(signoffSection);
+  signoffSection.fieldIds.forEach((fieldId) => {
+    const field = fieldMap.get(fieldId);
+    const element = field ? renderField(field) : null;
+    if (element) signoff.grid.appendChild(element);
+  });
+  container.appendChild(signoff.section);
+
   const actions = document.createElement("div");
   actions.className = "form-actions";
   const submitButton = document.createElement("button");
@@ -578,7 +643,9 @@ function getFieldValue(field) {
 
 function isFieldComplete(field) {
   const value = getFieldValue(field);
-  if (field.type === "checkbox") return true;
+  if (field.type === "checkbox") {
+    return field.required ? Boolean(value) : true;
+  }
   if (!field.required) return true;
   if (field.validation?.minLength) return value.length >= field.validation.minLength;
   return Boolean(value);
@@ -632,6 +699,10 @@ function updateProgress(schema) {
       complete = ["conditionRating", "priority"].every((id) =>
         isFieldComplete(schema.fields.find((field) => field.id === id))
       );
+    } else if (index === 4) {
+      complete = ["customerSignoffName", "workCompletedConfirmed"].every((id) =>
+        isFieldComplete(schema.fields.find((field) => field.id === id))
+      );
     }
 
     if (complete) element.classList.add("is-complete");
@@ -659,15 +730,142 @@ function updateFollowUpAlert(schema) {
   }
 }
 
+function scheduleDraftSave(schema) {
+  clearTimeout(draftSaveTimer);
+  draftSaveTimer = setTimeout(() => saveDraft(schema), 450);
+}
+
+function setDraftStatus(message) {
+  if (draftStatus) draftStatus.textContent = message;
+}
+
+function collectFormState(schema) {
+  const state = { fields: {}, checklist: {} };
+
+  schema.fields.forEach((field) => {
+    state.fields[field.id] = getFieldValue(field);
+  });
+
+  if (schema.checklist) {
+    schema.checklist.items.forEach((item) => {
+      state.checklist[item.id] =
+        formElement.querySelector(`input[name="${item.id}"]:checked`)?.value || null;
+    });
+  }
+
+  return state;
+}
+
+function applyFormState(schema, state) {
+  if (!state) return;
+
+  schema.fields.forEach((field) => {
+    const value = state.fields?.[field.id];
+    if (value === undefined) return;
+
+    if (field.type === "checkbox") {
+      const control = document.getElementById(field.id);
+      if (control) control.checked = Boolean(value);
+      return;
+    }
+
+    if (field.type === "status-cards" || field.type === "priority-pills") {
+      const input = formElement.querySelector(`input[name="${field.id}"][value="${value}"]`);
+      if (input) input.checked = true;
+      return;
+    }
+
+    const control = document.getElementById(field.id);
+    if (control) control.value = value;
+  });
+
+  if (schema.checklist && state.checklist) {
+    schema.checklist.items.forEach((item) => {
+      const value = state.checklist[item.id];
+      if (!value) return;
+      const input = formElement.querySelector(`input[name="${item.id}"][value="${value}"]`);
+      if (input) input.checked = true;
+    });
+  }
+
+  updateProgress(schema);
+  updateFollowUpAlert(schema);
+}
+
+function saveDraft(schema) {
+  try {
+    const state = collectFormState(schema);
+    const hasContent = Object.values(state.fields).some((value) =>
+      typeof value === "boolean" ? value : String(value).length > 0
+    ) || Object.values(state.checklist).some(Boolean);
+
+    if (!hasContent) {
+      localStorage.removeItem(DRAFT_STORAGE_KEY);
+      setDraftStatus("");
+      return;
+    }
+
+    localStorage.setItem(
+      DRAFT_STORAGE_KEY,
+      JSON.stringify({ savedAt: new Date().toISOString(), state })
+    );
+    setDraftStatus("Draft saved locally");
+  } catch (error) {
+    console.info("Draft save unavailable:", error.message);
+  }
+}
+
+function restoreDraft(schema) {
+  try {
+    const raw = localStorage.getItem(DRAFT_STORAGE_KEY);
+    if (!raw) return;
+
+    const parsed = JSON.parse(raw);
+    applyFormState(schema, parsed.state);
+    const savedTime = new Date(parsed.savedAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+    setDraftStatus(`Draft restored from ${savedTime}`);
+  } catch (error) {
+    console.info("Could not restore draft:", error.message);
+  }
+}
+
+function loadSampleData(schema) {
+  applyFormState(schema, schema.sampleData || EMBEDDED_SCHEMA.sampleData);
+  const serviceDate = document.getElementById("serviceDate");
+  if (serviceDate) serviceDate.value = todayISO();
+  clearValidationState();
+  setDraftStatus("Sample data loaded — edit and submit to preview output");
+  saveDraft(schema);
+  formElement.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function clearFormData(schema) {
+  formElement.reset();
+  schema.fields.forEach((field) => {
+    if (field.defaultToday && field.type === "date") {
+      const control = document.getElementById(field.id);
+      if (control) control.value = todayISO();
+    }
+  });
+  clearValidationState();
+  successMessage.hidden = true;
+  jsonPreviewSection.hidden = true;
+  lastSubmission = null;
+  localStorage.removeItem(DRAFT_STORAGE_KEY);
+  setDraftStatus("Form cleared");
+  updateProgress(schema);
+  updateFollowUpAlert(schema);
+}
+
 function attachLiveUpdates(schema) {
-  formElement.addEventListener("input", () => {
+  const onChange = () => {
     updateProgress(schema);
     updateFollowUpAlert(schema);
-  });
-  formElement.addEventListener("change", () => {
-    updateProgress(schema);
-    updateFollowUpAlert(schema);
-  });
+    scheduleDraftSave(schema);
+  };
+
+  formElement.addEventListener("input", onChange);
+  formElement.addEventListener("change", onChange);
 
   schema.fields.forEach((field) => {
     const control = document.getElementById(field.id);
@@ -717,9 +915,20 @@ function validateField(field) {
 
   const value = field.type === "checkbox" ? control.checked : control.value.trim();
 
+  if (field.required && field.type === "checkbox" && !value) {
+    control.closest(".toggle-field")?.classList.add("invalid");
+    setFieldError(control, message);
+    return false;
+  }
+
   if (field.required && field.type !== "checkbox" && !value) {
     setFieldError(control, message);
     return false;
+  }
+
+  if (field.type === "checkbox") {
+    control.closest(".toggle-field")?.classList.remove("invalid");
+    return true;
   }
 
   if (field.validation?.minLength && value.length < field.validation.minLength) {
@@ -822,6 +1031,9 @@ function handleSubmit(event) {
   }
 
   const submission = collectFormData(formSchema);
+  lastSubmission = submission;
+  localStorage.removeItem(DRAFT_STORAGE_KEY);
+  setDraftStatus("");
 
   successMessage.hidden = false;
   jsonPreviewSection.hidden = false;
@@ -830,12 +1042,38 @@ function handleSubmit(event) {
   successMessage.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+async function copyJsonToClipboard() {
+  if (!lastSubmission) return;
+  const text = JSON.stringify(lastSubmission, null, 2);
+  try {
+    await navigator.clipboard.writeText(text);
+    copyJsonBtn.textContent = "Copied!";
+    setTimeout(() => {
+      copyJsonBtn.textContent = "Copy JSON";
+    }, 1800);
+  } catch {
+    copyJsonBtn.textContent = "Copy failed";
+  }
+}
+
+function bindUtilityActions(schema) {
+  loadSampleBtn?.addEventListener("click", () => loadSampleData(schema));
+  clearFormBtn?.addEventListener("click", () => clearFormData(schema));
+  copyJsonBtn?.addEventListener("click", copyJsonToClipboard);
+  newInspectionBtn?.addEventListener("click", () => {
+    clearFormData(schema);
+    formElement.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+}
+
 async function init() {
   formSchema = await loadSchema();
   renderJobPanel(formSchema);
   renderStepper();
   renderForm(formSchema);
   attachLiveUpdates(formSchema);
+  restoreDraft(formSchema);
+  bindUtilityActions(formSchema);
   updateProgress(formSchema);
   formElement.addEventListener("submit", handleSubmit);
 }

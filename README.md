@@ -54,11 +54,21 @@ This demo maps directly to Jr. Solutions Engineer responsibilities:
 ## Features
 
 - **JSON-based form schema** — human-readable field definitions in `form-schema.json`
-- **Required field validation** — client-side checks with accessible error messages
-- **Checklist fields** — multi-item inspection checklist from schema
-- **Dropdown options** — equipment type, inspection type, condition, and priority
-- **Submitted data preview** — formatted JSON output after successful submit
+- **Industry-style checklist** — Pass / Fail / N/A per item (common in equipment inspection apps)
+- **Job context panel** — work order, status, and live completion tracking
+- **Visual status cards** — Pass, Needs Attention, Fail condition ratings
+- **Customer sign-off** — name + completion confirmation before submit
+- **Sample data loader** — one-click demo for recruiters (`Load sample data`)
+- **Draft auto-save** — local browser storage between sessions
+- **Required field validation** — inline errors with accessible messaging
+- **Submitted data preview** — formatted JSON with copy-to-clipboard
 - **Public-safe generic workflow** — no real data, credentials, or proprietary logic
+
+## Live Demo
+
+Open `index.html` locally, or view on GitHub Pages after enabling Pages for the `main` branch in repo settings.
+
+**Recruiter tip:** Click **Load sample data**, then **Submit Inspection** to see the full workflow in under 10 seconds.
 
 ## Privacy Note
 

@@ -1,7 +1,7 @@
 {
   "formId": "field-service-inspection",
   "formTitle": "Field Service Inspection",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "demoJob": {
     "workOrder": "WO-20481",
     "status": "In Progress",
@@ -141,6 +141,26 @@
       "label": "Photo evidence required for this inspection",
       "type": "checkbox",
       "required": false
+    },
+    {
+      "id": "customerSignoffName",
+      "label": "Customer Sign-Off Name",
+      "type": "text",
+      "required": true,
+      "placeholder": "Name of person approving completed work",
+      "validation": {
+        "minLength": 2,
+        "message": "Customer sign-off name is required."
+      }
+    },
+    {
+      "id": "workCompletedConfirmed",
+      "label": "Customer confirms work was completed satisfactorily",
+      "type": "checkbox",
+      "required": true,
+      "validation": {
+        "message": "Customer sign-off confirmation is required to close this inspection."
+      }
     }
   ],
   "checklist": {
@@ -163,5 +183,27 @@
       { "id": "emergencyStop", "label": "Emergency stop tested" },
       { "id": "serviceAreaClear", "label": "Service area clear" }
     ]
+  },
+  "sampleData": {
+    "fields": {
+      "customerName": "Summit Industrial Services",
+      "jobSiteLocation": "1200 Harbor Way, Building C — Seattle, WA",
+      "technicianName": "Jordan Ellis",
+      "equipmentType": "hvac",
+      "inspectionType": "preventive-maintenance",
+      "conditionRating": "needs-attention",
+      "priority": "medium",
+      "technicianNotes": "Filter replaced. Minor vibration on blower motor — recommend bearing inspection within 30 days.",
+      "photoRequired": true,
+      "customerSignoffName": "Alex Morgan",
+      "workCompletedConfirmed": true
+    },
+    "checklist": {
+      "powersOn": "pass",
+      "noVisibleDamage": "pass",
+      "safetyGuards": "pass",
+      "emergencyStop": "pass",
+      "serviceAreaClear": "na"
+    }
   }
 }

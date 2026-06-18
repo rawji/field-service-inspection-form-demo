@@ -247,7 +247,7 @@ body {
 /* Stepper */
 .stepper {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
@@ -309,6 +309,73 @@ body {
   border-bottom: 1px solid var(--border);
 }
 
+.card-header-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.65rem;
+  min-width: 11rem;
+}
+
+.demo-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.btn-secondary,
+.btn-ghost {
+  min-height: 2.5rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.btn-secondary {
+  border: 1px solid #93c5fd;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.btn-secondary:hover {
+  background: #dbeafe;
+}
+
+.btn-ghost {
+  border: 1px solid var(--border-strong);
+  background: #fff;
+  color: var(--text-muted);
+}
+
+.btn-ghost:hover {
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+.draft-status {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.preview-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.preview-card .card-header {
+  display: block;
+  margin-bottom: 1rem;
+}
+
 .card-header h2 {
   margin: 0 0 0.25rem;
   font-size: 1.4rem;
@@ -353,6 +420,35 @@ body {
 .form-section {
   margin-bottom: 2rem;
   scroll-margin-top: 1rem;
+  animation: section-in 0.45s ease both;
+}
+
+.form-section:nth-child(2) { animation-delay: 0.05s; }
+.form-section:nth-child(3) { animation-delay: 0.1s; }
+.form-section:nth-child(4) { animation-delay: 0.15s; }
+.form-section:nth-child(5) { animation-delay: 0.2s; }
+
+@keyframes section-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-section--signoff {
+  padding: 1rem;
+  border: 1px solid #bfdbfe;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(180deg, #f8fbff 0%, #f1f5f9 100%);
+}
+
+.toggle-field.invalid {
+  border-color: var(--fail-border);
+  background: var(--fail-bg);
 }
 
 .form-section-header {
@@ -887,23 +983,26 @@ button[type="submit"]:active,
   }
 }
 
-@media (max-width: 520px) {
-  .app-shell {
-    padding-bottom: 5.5rem;
-  }
-
-  .workspace,
-  .topbar-inner,
-  .site-footer {
-    width: min(100% - 1rem, var(--max));
-  }
-
-  .card {
-    padding: 1rem;
-  }
-
+@media (max-width: 640px) {
   .card-header {
     flex-direction: column;
+  }
+
+  .card-header-actions {
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .demo-toolbar {
+    justify-content: stretch;
+  }
+
+  .demo-toolbar button {
+    flex: 1;
+  }
+
+  .draft-status {
+    text-align: left;
   }
 
   .form-actions button[type="submit"] {
