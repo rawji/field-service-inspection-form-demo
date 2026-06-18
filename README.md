@@ -1,3 +1,14 @@
+# Field Service Portfolio Demos
+
+Two public portfolio demos showing how operational field service requirements become **JSON-driven workflows** — an inspection form and a dispatch triage board.
+
+| Demo | URL | What it shows |
+| --- | --- | --- |
+| **Inspection form** | [Live demo (root)](https://rawji.github.io/field-service-inspection-form-demo/) | JSON schema → dynamic form, validation, checklist, JSON export |
+| **Dispatch triage** (FieldOps Desk) | [Live demo (`/dispatch/`)](https://rawji.github.io/field-service-inspection-form-demo/dispatch/) | JSON routing rules → job queue, triage, assignment, simulation |
+
+---
+
 # Field Service Inspection Form Demo
 
 A small, public portfolio demo that translates operational field service requirements into a working customer-facing inspection form.
@@ -66,6 +77,9 @@ This demo maps directly to Jr. Solutions Engineer responsibilities:
 
 ## Live Demo
 
+- **Inspection form:** [rawji.github.io/field-service-inspection-form-demo](https://rawji.github.io/field-service-inspection-form-demo/)
+- **Dispatch triage:** [rawji.github.io/field-service-inspection-form-demo/dispatch](https://rawji.github.io/field-service-inspection-form-demo/dispatch/)
+
 Open `index.html` locally, or view on GitHub Pages after enabling Pages for the `main` branch in repo settings.
 
 **Recruiter tip:** Click **Load sample data**, then **Submit Inspection** to see the full workflow in under 10 seconds.
@@ -86,11 +100,19 @@ No install step, build tools, or dependencies are required.
 
 ```
 field-service-inspection-form-demo/
-├── index.html          # Page shell and layout
-├── styles.css          # Responsive styling
-├── app.js              # Schema loading, rendering, validation, submit handling
-├── form-schema.json    # Form field definitions and validation rules
-├── README.md           # Project documentation
+├── index.html          # Inspection form demo (root)
+├── styles.css
+├── app.js
+├── form-schema.json
+├── dispatch/           # FieldOps Desk — dispatch triage demo
+│   ├── index.html
+│   ├── styles.css
+│   ├── app.js
+│   └── data/
+│       ├── jobs.json
+│       ├── routing-rules.json
+│       └── technicians.json
+├── README.md
 └── .gitignore
 ```
 

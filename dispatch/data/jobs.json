@@ -1,0 +1,74 @@
+{
+  "jobs": [
+    {
+      "id": "JOB-1042",
+      "customer": "Northgate Logistics",
+      "site": "Warehouse B — Bay 3",
+      "equipmentId": "CR-2201",
+      "issueType": "Mechanical",
+      "priority": "High",
+      "productionImpact": true,
+      "status": "In Progress",
+      "queue": "scheduled",
+      "technician": "A. Rivera",
+      "summary": "Overhead crane making grinding noise during lifts.",
+      "submittedAt": "2026-06-14T09:15:00Z"
+    },
+    {
+      "id": "JOB-1045",
+      "customer": "Summit Manufacturing",
+      "site": "Plant 2 — Line 4",
+      "equipmentId": "GEN-118",
+      "issueType": "Electrical",
+      "priority": "Critical",
+      "productionImpact": true,
+      "status": "Unassigned",
+      "queue": "urgent",
+      "technician": null,
+      "summary": "Backup generator failed during power transfer test.",
+      "submittedAt": "2026-06-15T14:30:00Z"
+    },
+    {
+      "id": "JOB-1048",
+      "customer": "Harborview Properties",
+      "site": "Roof — HVAC Zone C",
+      "equipmentId": "HVAC-44",
+      "issueType": "Performance",
+      "priority": "Medium",
+      "productionImpact": false,
+      "status": "Scheduled",
+      "queue": "scheduled",
+      "technician": "J. Kim",
+      "summary": "Cooling output below spec on rooftop unit.",
+      "submittedAt": "2026-06-15T11:00:00Z"
+    },
+    {
+      "id": "JOB-1051",
+      "customer": "Metro Construction",
+      "site": "Job Site 18",
+      "equipmentId": "LIFT-09",
+      "issueType": "Safety",
+      "priority": "High",
+      "productionImpact": false,
+      "status": "Unassigned",
+      "queue": "urgent",
+      "technician": null,
+      "summary": "Scissor lift emergency stop intermittently failing.",
+      "submittedAt": "2026-06-16T07:45:00Z"
+    },
+    {
+      "id": "JOB-1053",
+      "customer": "Clearwater Foods",
+      "site": "Cold Storage — Room 2",
+      "equipmentId": "COMP-77",
+      "issueType": "Mechanical",
+      "priority": "Low",
+      "productionImpact": false,
+      "status": "Complete",
+      "queue": "scheduled",
+      "technician": "M. Santos",
+      "summary": "Compressor belt replaced during PM visit.",
+      "submittedAt": "2026-06-13T16:20:00Z"
+    }
+  ]
+}

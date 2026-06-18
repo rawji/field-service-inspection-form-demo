@@ -1,0 +1,61 @@
+{
+  "name": "Field service routing rules",
+  "description": "JSON rules that determine queue placement, priority, and technician assignment suggestions.",
+  "rules": [
+    {
+      "id": "critical-priority",
+      "label": "Critical priority",
+      "condition": { "field": "priority", "equals": "Critical" },
+      "actions": {
+        "queue": "urgent",
+        "suggestedTeam": "Emergency Response",
+        "notify": "Dispatch lead",
+        "slaHours": 2
+      }
+    },
+    {
+      "id": "production-impact",
+      "label": "Production impact flagged",
+      "condition": { "field": "productionImpact", "equals": true },
+      "actions": {
+        "queue": "urgent",
+        "suggestedTeam": "Operations Support",
+        "notify": "Site manager",
+        "slaHours": 4
+      }
+    },
+    {
+      "id": "safety-issue",
+      "label": "Safety-related issue",
+      "condition": { "field": "issueType", "equals": "Safety" },
+      "actions": {
+        "queue": "urgent",
+        "suggestedTeam": "Safety & Compliance",
+        "notify": "Safety officer",
+        "slaHours": 4
+      }
+    },
+    {
+      "id": "high-priority",
+      "label": "High priority",
+      "condition": { "field": "priority", "equals": "High" },
+      "actions": {
+        "queue": "scheduled",
+        "suggestedTeam": "Field Technicians",
+        "notify": "Dispatch",
+        "slaHours": 24
+      }
+    },
+    {
+      "id": "default",
+      "label": "Standard request",
+      "condition": { "field": "default", "equals": true },
+      "actions": {
+        "queue": "scheduled",
+        "suggestedTeam": "Field Technicians",
+        "notify": "Dispatch",
+        "slaHours": 72
+      }
+    }
+  ]
+}

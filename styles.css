@@ -55,6 +55,32 @@ body {
   padding-bottom: 5rem;
 }
 
+.portfolio-nav {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+}
+.portfolio-nav-inner {
+  width: min(100% - 2rem, var(--max));
+  margin: 0 auto;
+  display: flex;
+  gap: .35rem;
+  padding: .55rem 0;
+}
+.portfolio-nav-link {
+  padding: .35rem .75rem;
+  border-radius: 999px;
+  font-size: .8125rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: background .15s, color .15s;
+}
+.portfolio-nav-link:hover { color: var(--text); background: var(--surface-muted); }
+.portfolio-nav-link.is-active {
+  color: var(--brand-accent);
+  background: var(--brand-soft);
+}
+
 /* Top bar */
 .topbar {
   background: linear-gradient(120deg, var(--brand) 0%, #132a4a 55%, #0f2744 100%);

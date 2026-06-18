@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FieldOps Desk — JSON-driven field service dispatch triage demo.">
+  <title>FieldOps Desk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="app-loading">
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <nav class="portfolio-nav" aria-label="Portfolio demos">
+    <div class="portfolio-nav-inner wrap">
+      <a href="../" class="portfolio-nav-link">Inspection form</a>
+      <a href="./" class="portfolio-nav-link is-active" aria-current="page">Dispatch triage</a>
+    </div>
+  </nav>
+
+  <header class="header">
+    <div class="wrap header-inner">
+      <div>
+        <p class="kicker">Portfolio demo · JSON-driven dispatch</p>
+        <h1>FieldOps Desk</h1>
+        <p class="tagline">Translate operational requirements into JSON routing rules — then triage, assign, and document field jobs in one view.</p>
+      </div>
+      <a class="gh-link" href="https://github.com/rawji/field-service-inspection-form-demo" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <section class="quickstart" aria-label="Quick start">
+      <p><strong>New here?</strong> Click a job card to see routing details, or run the live demo in one click.</p>
+      <button type="button" class="btn btn-primary btn-sm" id="run-demo">Run live demo</button>
+    </section>
+
+    <div id="stats-row" class="stats-row" aria-label="Queue statistics">
+      <div class="stat-card skeleton"><span class="stat-label">Open jobs</span><span class="stat-value">—</span></div>
+      <div class="stat-card skeleton stat-urgent"><span class="stat-label">Urgent queue</span><span class="stat-value">—</span></div>
+      <div class="stat-card skeleton stat-warn"><span class="stat-label">Unassigned</span><span class="stat-value">—</span></div>
+      <div class="stat-card skeleton"><span class="stat-label">Routing rules</span><span class="stat-value">—</span></div>
+    </div>
+
+    <div class="layout">
+      <section class="panel queue-panel" aria-labelledby="queue-heading">
+        <div class="panel-top">
+          <div>
+            <h2 id="queue-heading" class="panel-title">Live job queue</h2>
+            <p class="muted no-margin">Sample jobs load instantly. Search, filter, or click a card for routing details.</p>
+          </div>
+        </div>
+
+        <div class="queue-toolbar">
+          <label class="search-wrap">
+            <span class="visually-hidden">Search jobs</span>
+            <input type="search" id="job-search" placeholder="Search customer, job ID, equipment…" autocomplete="off">
+          </label>
+          <label class="sort-wrap">
+            <span class="sort-label">Sort</span>
+            <select id="job-sort">
+              <option value="newest">Newest first</option>
+              <option value="priority">Priority</option>
+              <option value="customer">Customer A–Z</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="filters" role="tablist" aria-label="Filter jobs">
+          <button type="button" class="filter is-active" data-filter="all">All <span class="filter-count" data-count="all"></span></button>
+          <button type="button" class="filter" data-filter="urgent">Urgent <span class="filter-count" data-count="urgent"></span></button>
+          <button type="button" class="filter" data-filter="unassigned">Unassigned <span class="filter-count" data-count="unassigned"></span></button>
+        </div>
+
+        <div id="job-list" class="job-list" aria-live="polite">
+          <div class="job-skeleton" aria-hidden="true"></div>
+          <div class="job-skeleton" aria-hidden="true"></div>
+          <div class="job-skeleton" aria-hidden="true"></div>
+        </div>
+
+        <section class="panel mobile-detail" id="mobile-detail" aria-label="Selected job routing" hidden>
+          <h2 class="panel-title">Selected job routing</h2>
+          <div id="mobile-detail-content"></div>
+        </section>
+
+        <div class="activity-panel">
+          <h3 class="activity-title">Recent activity</h3>
+          <ul id="activity-log" class="activity-log"></ul>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <div class="sidebar-tabs" role="tablist" aria-label="Sidebar panels">
+          <button type="button" class="sidebar-tab is-active" role="tab" aria-selected="true" data-tab="detail" id="tab-detail">Routing</button>
+          <button type="button" class="sidebar-tab" role="tab" aria-selected="false" data-tab="simulate" id="tab-simulate">Simulate</button>
+          <button type="button" class="sidebar-tab" role="tab" aria-selected="false" data-tab="rules" id="tab-rules">Rules</button>
+        </div>
+
+        <section class="panel tab-panel is-active" id="panel-detail" role="tabpanel" aria-labelledby="tab-detail">
+          <h2 class="panel-title">Routing result</h2>
+          <div id="detail-content" class="detail-welcome">
+            <p>Select a job from the queue to view routing details, matched rules, and summaries.</p>
+          </div>
+        </section>
+
+        <section class="panel tab-panel" id="panel-simulate" role="tabpanel" aria-labelledby="tab-simulate" hidden>
+          <h2 class="panel-title">Simulate new request</h2>
+          <p class="muted">Rules evaluate on submit. Preview updates as you type.</p>
+
+          <div id="rule-preview" class="rule-preview muted">Fill in the form to preview which JSON rule will match.</div>
+
+          <form id="request-form" novalidate>
+            <label class="field">
+              <span>Customer</span>
+              <input type="text" id="customer" required placeholder="Account name">
+            </label>
+            <label class="field">
+              <span>Site / location</span>
+              <input type="text" id="site" required placeholder="Building or job site">
+            </label>
+            <label class="field">
+              <span>Equipment ID</span>
+              <input type="text" id="equipmentId" required placeholder="Asset tag">
+            </label>
+            <label class="field">
+              <span>Issue type</span>
+              <select id="issueType" required>
+                <option value="">Select…</option>
+                <option>Mechanical</option>
+                <option>Electrical</option>
+                <option>Safety</option>
+                <option>Performance</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Priority</span>
+              <select id="priority" required>
+                <option value="">Select…</option>
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+                <option>Critical</option>
+              </select>
+            </label>
+            <label class="check">
+              <input type="checkbox" id="productionImpact">
+              <span>Production impact reported</span>
+            </label>
+            <label class="field">
+              <span>Summary</span>
+              <textarea id="summary" rows="3" required placeholder="Brief description of the issue"></textarea>
+            </label>
+            <p id="form-error" class="form-error hidden" role="alert"></p>
+            <div class="btn-row">
+              <button type="button" class="btn btn-secondary" id="demo-fill">Fill demo request</button>
+              <button type="submit" class="btn btn-primary">Route request</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel tab-panel" id="panel-rules" role="tabpanel" aria-labelledby="tab-rules" hidden>
+          <div class="panel-head-inline">
+            <h2 class="panel-title">Routing rules (JSON)</h2>
+            <button type="button" class="btn btn-ghost btn-sm" id="copy-rules">Copy</button>
+          </div>
+          <p class="muted">First matching rule wins. Edit <code>data/routing-rules.json</code> to change behavior.</p>
+          <pre id="rules-json" class="code-sm code-tall"></pre>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <footer class="footer">
+    <div class="wrap"><p>FieldOps Desk — public-safe portfolio demo for field operations and solutions engineering roles.</p></div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
