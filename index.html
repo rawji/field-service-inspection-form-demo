@@ -3,44 +3,83 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A public field service inspection form demo with JSON-driven structure and validation.">
+  <meta name="theme-color" content="#0c1a2e">
   <title>Field Service Inspection Form Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="page">
-    <header class="page-header">
-      <h1>Field Service Inspection Form Demo</h1>
-      <p class="subtitle">
-        A public demo showing JSON-driven form structure, validation, and workflow documentation for field service operations.
-      </p>
-      <p class="demo-note" role="note">
-        Demo only. No real customer data is collected or submitted.
-      </p>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <div>
+            <p class="brand-eyebrow">Portfolio Demo</p>
+            <h1>Field Service Inspection</h1>
+          </div>
+        </div>
+        <p class="topbar-note">Demo only — no real customer data is collected or submitted.</p>
+      </div>
     </header>
 
-    <section class="card" aria-labelledby="form-heading">
-      <h2 id="form-heading" class="visually-hidden">Inspection Form</h2>
+    <main class="workspace">
+      <aside class="job-panel" id="job-panel" aria-label="Job context"></aside>
 
-      <!-- Form fields are rendered from form-schema.json by app.js -->
-      <form id="inspection-form" novalidate></form>
-    </section>
+      <div class="form-column">
+        <nav class="stepper" id="form-stepper" aria-label="Form progress"></nav>
 
-    <section
-      id="success-message"
-      class="card success-card"
-      hidden
-      aria-live="polite"
-      aria-atomic="true"
-    >
-      <h2>Inspection saved successfully</h2>
-      <p>Your inspection record is ready for review. Data below is shown for demo purposes only.</p>
-    </section>
+        <section class="card form-card" aria-labelledby="form-heading">
+          <div class="card-header">
+            <div>
+              <h2 id="form-heading">Inspection Report</h2>
+              <p>Complete each section in order. Required fields are marked with <span class="required-mark" aria-hidden="true">*</span></p>
+            </div>
+            <div class="completion-chip" id="completion-chip" aria-live="polite">0% complete</div>
+          </div>
 
-    <section id="json-preview-section" class="card" hidden aria-labelledby="preview-heading">
-      <h2 id="preview-heading">Submitted Data Preview</h2>
-      <pre id="json-preview" class="json-preview" aria-label="Formatted JSON preview of submitted form data"></pre>
-    </section>
-  </main>
+          <div id="follow-up-alert" class="follow-up-alert" hidden role="status">
+            <strong>Follow-up recommended.</strong>
+            <span>A failed item or non-pass condition was recorded. Add notes and consider attaching photo evidence.</span>
+          </div>
+
+          <form id="inspection-form" novalidate></form>
+        </section>
+
+        <section
+          id="success-message"
+          class="card success-card"
+          hidden
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <div class="success-icon" aria-hidden="true">✓</div>
+          <h2>Inspection saved successfully</h2>
+          <p>Your inspection record is ready for review. Data below is shown for demo purposes only.</p>
+          <div id="submit-summary" class="submit-summary"></div>
+        </section>
+
+        <section id="json-preview-section" class="card preview-card" hidden aria-labelledby="preview-heading">
+          <div class="card-header">
+            <h2 id="preview-heading">Submitted Data Preview</h2>
+            <p>Structured JSON output — ready for downstream systems or export.</p>
+          </div>
+          <pre id="json-preview" class="json-preview" aria-label="Formatted JSON preview of submitted form data"></pre>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <p>Built as a public portfolio demo for solutions engineering workflows.</p>
+    </footer>
+
+    <div class="sticky-submit" id="sticky-submit" hidden>
+      <button type="submit" form="inspection-form" class="sticky-submit-btn">Submit Inspection</button>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>

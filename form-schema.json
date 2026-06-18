@@ -1,7 +1,12 @@
 {
   "formId": "field-service-inspection",
   "formTitle": "Field Service Inspection",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "demoJob": {
+    "workOrder": "WO-20481",
+    "status": "In Progress",
+    "syncLabel": "Ready to sync"
+  },
   "fields": [
     {
       "id": "customerName",
@@ -41,6 +46,7 @@
       "label": "Service Date",
       "type": "date",
       "required": true,
+      "defaultToday": true,
       "validation": {
         "message": "Service date is required."
       }
@@ -80,33 +86,46 @@
     },
     {
       "id": "conditionRating",
-      "label": "Condition Rating",
-      "type": "select",
+      "label": "Overall Condition",
+      "type": "status-cards",
       "required": true,
-      "placeholder": "Select condition rating",
       "options": [
-        { "value": "pass", "label": "Pass" },
-        { "value": "needs-attention", "label": "Needs Attention" },
-        { "value": "fail", "label": "Fail" }
+        {
+          "value": "pass",
+          "label": "Pass",
+          "description": "Equipment meets inspection standards",
+          "tone": "success"
+        },
+        {
+          "value": "needs-attention",
+          "label": "Needs Attention",
+          "description": "Minor issues — schedule follow-up",
+          "tone": "warning"
+        },
+        {
+          "value": "fail",
+          "label": "Fail",
+          "description": "Critical issue — immediate action required",
+          "tone": "danger"
+        }
       ],
       "validation": {
-        "message": "Please select a condition rating."
+        "message": "Select an overall condition rating."
       }
     },
     {
       "id": "priority",
-      "label": "Priority",
-      "type": "select",
+      "label": "Priority Level",
+      "type": "priority-pills",
       "required": true,
-      "placeholder": "Select priority level",
       "options": [
-        { "value": "low", "label": "Low" },
-        { "value": "medium", "label": "Medium" },
-        { "value": "high", "label": "High" },
-        { "value": "critical", "label": "Critical" }
+        { "value": "low", "label": "Low", "tone": "neutral" },
+        { "value": "medium", "label": "Medium", "tone": "info" },
+        { "value": "high", "label": "High", "tone": "warning" },
+        { "value": "critical", "label": "Critical", "tone": "danger" }
       ],
       "validation": {
-        "message": "Please select a priority level."
+        "message": "Select a priority level."
       }
     },
     {
@@ -114,24 +133,29 @@
       "label": "Technician Notes",
       "type": "textarea",
       "required": false,
-      "placeholder": "Observations, follow-up actions, or additional context",
+      "placeholder": "Document observations, defects found, and recommended next steps",
       "rows": 4
     },
     {
       "id": "photoRequired",
-      "label": "Photo Required?",
+      "label": "Photo evidence required for this inspection",
       "type": "checkbox",
       "required": false
     }
   ],
   "checklist": {
     "id": "inspectionChecklist",
-    "label": "Inspection Checklist",
+    "label": "Safety & Operational Checklist",
+    "type": "triState",
     "required": true,
-    "minChecked": 1,
     "validation": {
-      "message": "Complete at least one checklist item."
+      "message": "Rate every checklist item as Pass, Fail, or N/A."
     },
+    "states": [
+      { "value": "pass", "label": "Pass" },
+      { "value": "fail", "label": "Fail" },
+      { "value": "na", "label": "N/A" }
+    ],
     "items": [
       { "id": "powersOn", "label": "Equipment powers on" },
       { "id": "noVisibleDamage", "label": "No visible damage" },
