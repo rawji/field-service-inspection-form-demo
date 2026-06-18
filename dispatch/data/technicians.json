@@ -4,6 +4,7 @@
     { "name": "J. Kim", "team": "Field Technicians", "available": true },
     { "name": "M. Santos", "team": "Field Technicians", "available": false },
     { "name": "T. Chen", "team": "Emergency Response", "available": true },
+    { "name": "R. Patel", "team": "Emergency Response", "available": true },
     { "name": "D. Brooks", "team": "Safety & Compliance", "available": true }
   ]
 }
