@@ -4,36 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="A public field service inspection form demo with JSON-driven structure and validation.">
-  <meta name="theme-color" content="#0c1a2e">
-  <title>Field Service Inspection Form Demo</title>
+  <meta name="theme-color" content="#0b1220">
+  <title>Field Service Inspection</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
   <nav class="portfolio-nav" aria-label="Portfolio demos">
-    <div class="portfolio-nav-inner">
+    <div class="portfolio-nav-inner wrap">
       <a href="./" class="portfolio-nav-link is-active" aria-current="page">Inspection form</a>
       <a href="./dispatch/" class="portfolio-nav-link">Dispatch triage</a>
     </div>
   </nav>
 
-  <div class="app-shell">
-    <header class="topbar">
-      <div class="topbar-inner">
-        <div class="brand">
-          <span class="brand-mark" aria-hidden="true"></span>
-          <div>
-            <p class="brand-eyebrow">Portfolio Demo</p>
-            <h1>Field Service Inspection</h1>
-          </div>
-        </div>
-        <p class="topbar-note">Demo only — no real customer data is collected or submitted.</p>
+  <header class="header">
+    <div class="wrap header-inner">
+      <div>
+        <p class="kicker">Portfolio demo · JSON-driven form</p>
+        <h1>Field Service Inspection</h1>
+        <p class="tagline">Translate operational requirements into a JSON form schema — then validate, complete checklists, and export structured inspection records.</p>
       </div>
-    </header>
+      <a class="gh-link" href="https://github.com/rawji/field-service-inspection-form-demo" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </header>
 
-    <main class="workspace">
+  <div class="app-shell">
+    <main id="main" class="workspace">
       <aside class="job-panel" id="job-panel" aria-label="Job context"></aside>
 
       <div class="form-column">
