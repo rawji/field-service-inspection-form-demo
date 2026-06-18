@@ -100,6 +100,7 @@ No install step, build tools, or dependencies are required.
 
 ```
 field-service-inspection-form-demo/
+├── portfolio.css       # Shared header, nav, and quickstart styles
 ├── index.html          # Inspection form demo (root)
 ├── styles.css
 ├── app.js

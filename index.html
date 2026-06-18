@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="portfolio.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -32,8 +33,13 @@
     </div>
   </header>
 
-  <div class="app-shell">
-    <main id="main" class="workspace">
+  <main id="main" class="wrap">
+    <section class="quickstart" aria-label="Quick start">
+      <p><strong>New here?</strong> Load sample data, then submit to see the full inspection workflow in one click.</p>
+      <button type="button" class="btn btn-primary btn-sm" id="load-sample-btn">Load sample data</button>
+    </section>
+
+    <div class="workspace">
       <aside class="job-panel" id="job-panel" aria-label="Job context"></aside>
 
       <div class="form-column">
@@ -48,7 +54,6 @@
             <div class="card-header-actions">
               <div class="completion-chip" id="completion-chip" aria-live="polite">0% complete</div>
               <div class="demo-toolbar">
-                <button type="button" class="btn-secondary" id="load-sample-btn">Load sample data</button>
                 <button type="button" class="btn-ghost" id="clear-form-btn">Clear form</button>
               </div>
               <p class="draft-status" id="draft-status" aria-live="polite"></p>
@@ -88,15 +93,15 @@
           <pre id="json-preview" class="json-preview" aria-label="Formatted JSON preview of submitted form data"></pre>
         </section>
       </div>
-    </main>
-
-    <footer class="site-footer">
-      <p>Built as a public portfolio demo for solutions engineering workflows.</p>
-    </footer>
-
-    <div class="sticky-submit" id="sticky-submit" hidden>
-      <button type="submit" form="inspection-form" class="sticky-submit-btn">Submit Inspection</button>
     </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Built as a public portfolio demo for solutions engineering workflows.</p></div>
+  </footer>
+
+  <div class="sticky-submit" id="sticky-submit" hidden>
+    <button type="submit" form="inspection-form" class="sticky-submit-btn">Submit Inspection</button>
   </div>
 
   <script src="app.js"></script>

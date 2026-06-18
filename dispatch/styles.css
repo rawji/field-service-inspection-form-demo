@@ -42,115 +42,12 @@ body {
 
 body.app-loading { cursor: progress; }
 
-.wrap { width: min(1180px, calc(100% - 2rem)); margin-inline: auto; }
-
 .hidden { display: none !important; }
 
 .visually-hidden {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
-
-.portfolio-nav {
-  background: #fff;
-  border-bottom: 1px solid var(--border);
-}
-.portfolio-nav-inner {
-  display: flex;
-  gap: .35rem;
-  padding: .55rem 0;
-}
-.portfolio-nav-link {
-  padding: .35rem .75rem;
-  border-radius: 999px;
-  font-size: .8125rem;
-  font-weight: 600;
-  color: var(--muted);
-  text-decoration: none;
-  transition: background .15s, color .15s;
-}
-.portfolio-nav-link:hover { color: var(--text); background: var(--bg-subtle); }
-.portfolio-nav-link.is-active {
-  color: var(--brand-dark);
-  background: var(--brand-soft);
-}
-
-/* ——— Header ——— */
-
-.header {
-  background: var(--header-h);
-  color: #fff;
-  padding: 1.5rem 0 1.75rem;
-  border-bottom: 1px solid rgba(255,255,255,.06);
-}
-.header-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1.25rem;
-}
-.kicker {
-  margin: 0 0 .4rem;
-  font-size: .6875rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: #93c5fd;
-}
-.header h1 {
-  margin: 0;
-  font-size: clamp(1.5rem, 3.5vw, 1.875rem);
-  font-weight: 800;
-  letter-spacing: -.03em;
-  line-height: 1.15;
-}
-.tagline {
-  margin: .45rem 0 0;
-  max-width: 36rem;
-  color: rgba(255,255,255,.78);
-  font-size: .9375rem;
-  line-height: 1.5;
-}
-.gh-link {
-  flex-shrink: 0;
-  color: #fff;
-  text-decoration: none;
-  font-size: .8125rem;
-  font-weight: 600;
-  padding: .5rem .9rem;
-  border: 1px solid rgba(255,255,255,.22);
-  border-radius: 8px;
-  background: rgba(255,255,255,.04);
-  transition: background .15s, border-color .15s;
-}
-.gh-link:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.35); }
-
-.skip-link {
-  position: absolute; left: -999px; top: 0; z-index: 99;
-  padding: .5rem 1rem; background: var(--brand); color: #fff;
-  font-weight: 600; text-decoration: none; border-radius: 0 0 8px 8px;
-}
-.skip-link:focus { left: .5rem; top: 0; }
-
-/* ——— Quick start ——— */
-
-.quickstart {
-  margin-top: 1.25rem;
-  padding: .9rem 1.1rem;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
-  font-size: .875rem;
-  color: var(--text);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: .75rem;
-}
-.quickstart p { margin: 0; flex: 1; min-width: 200px; color: var(--muted); }
-.quickstart strong { color: var(--text); }
 
 /* ——— Stats ——— */
 
@@ -657,24 +554,14 @@ body.is-ready .job-skeleton { display: none; }
 /* ——— Buttons ——— */
 
 .btn-row { display: flex; flex-wrap: wrap; gap: .45rem; }
-.btn {
-  padding: .55rem .95rem;
-  border-radius: 8px;
-  font: inherit;
-  font-size: .8125rem;
-  font-weight: 600;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: background .15s, border-color .15s, color .15s;
+.btn-secondary {
+  background: #fff;
+  color: var(--text);
+  border: 1px solid var(--border-strong);
 }
-.btn-sm { padding: .4rem .7rem; font-size: .75rem; }
-.btn-primary { background: var(--brand); color: #fff; }
-.btn-primary:hover { background: var(--brand-dark); }
-.btn-secondary { background: #fff; color: var(--text); border-color: var(--border-strong); }
 .btn-secondary:hover { border-color: var(--brand); color: var(--brand); }
 .btn-ghost { background: transparent; color: var(--brand); border: none; padding: .25rem .5rem; }
 .btn-ghost:hover { text-decoration: underline; }
-.btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 
 /* ——— Footer & toast ——— */
 
@@ -720,11 +607,8 @@ code {
 /* ——— Responsive ——— */
 
 @media (max-width: 640px) {
-  .header-inner { flex-direction: column; }
   .gh-link { align-self: flex-start; }
   .assign-row { flex-direction: column; }
-  .quickstart { flex-direction: column; align-items: stretch; }
-  .quickstart .btn { width: 100%; text-align: center; }
 }
 
 @media (prefers-reduced-motion: reduce) {
