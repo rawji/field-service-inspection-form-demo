@@ -1,11 +1,13 @@
 # Field Service Portfolio Demos
 
-Two public portfolio demos showing how operational field service requirements become **JSON-driven workflows** — an inspection form and a dispatch triage board.
+Three public portfolio demos showing how operational field service requirements become **JSON-driven workflows** — an inspection form, a dispatch triage board, and a requirements traceability map.
 
 | Demo | URL | What it shows |
 | --- | --- | --- |
+| **Portfolio home** | [Live demo (`/home.html`)](https://rawji.github.io/field-service-inspection-form-demo/home.html) | Hub with links to all three demos |
 | **Inspection form** | [Live demo (root)](https://rawji.github.io/field-service-inspection-form-demo/) | JSON schema → dynamic form, validation, checklist, JSON export |
 | **Dispatch triage** (FieldOps Desk) | [Live demo (`/dispatch/`)](https://rawji.github.io/field-service-inspection-form-demo/dispatch/) | JSON routing rules → job queue, triage, assignment, simulation |
+| **Workflow Requirements Map** | [Live demo (`/requirements-map/`)](https://rawji.github.io/field-service-inspection-form-demo/requirements-map/) | Requirements → fields, validation, outputs (traceability) |
 
 ---
 
@@ -77,10 +79,12 @@ This demo maps directly to Jr. Solutions Engineer responsibilities:
 
 ## Live Demo
 
+- **Portfolio home:** [rawji.github.io/field-service-inspection-form-demo/home.html](https://rawji.github.io/field-service-inspection-form-demo/home.html)
 - **Inspection form:** [rawji.github.io/field-service-inspection-form-demo](https://rawji.github.io/field-service-inspection-form-demo/)
 - **Dispatch triage:** [rawji.github.io/field-service-inspection-form-demo/dispatch](https://rawji.github.io/field-service-inspection-form-demo/dispatch/)
+- **Requirements map:** [rawji.github.io/field-service-inspection-form-demo/requirements-map](https://rawji.github.io/field-service-inspection-form-demo/requirements-map/)
 
-Open `index.html` locally, or view on GitHub Pages after enabling Pages for the `main` branch in repo settings.
+Open `index.html` or `home.html` locally, or view on GitHub Pages after enabling Pages for the `main` branch in repo settings.
 
 **Recruiter tip:** Click **Load sample data**, then **Submit Inspection** to see the full workflow in under 10 seconds.
 
@@ -90,16 +94,37 @@ This project is intentionally generic and does not include proprietary business 
 
 ## How to Run
 
-Open `index.html` in a browser.
+Open `home.html` or `index.html` in a browser.
 
 No install step, build tools, or dependencies are required.
 
-> **Tip:** If you serve the folder with a local web server, `app.js` will load `form-schema.json` directly. When opening the file locally, an embedded schema fallback is used automatically.
+> **Tip:** If you serve the folder with a local web server, `app.js` will load JSON files directly. When opening files locally, embedded fallbacks are used automatically.
+
+---
+
+# Workflow Requirements Map
+
+This demo demonstrates **requirements traceability**. It shows how customer and operational needs become form fields, validation rules, conditional logic, structured JSON output, and internal/customer-facing summaries.
+
+This is relevant to solutions engineering because the role requires translating customer success, implementation, and customer requirements into working forms and internal tools.
+
+## What it shows
+
+- Three workflow maps: **Field Service Inspection**, **Dispatch Triage**, and **Maintenance Request**
+- Responsive requirements table with four columns per row
+- Workflow selector to switch map content instantly
+- JSON source preview with copy button
+- Links to the live inspection and dispatch demos
+
+**Recruiter tip:** Open the Requirements Map, switch between workflows, and compare rows to the live form and dispatch demos.
+
+---
 
 ## Project Structure
 
 ```
 field-service-inspection-form-demo/
+├── home.html           # Portfolio hub — links to all three demos
 ├── portfolio.css       # Shared header, nav, and quickstart styles
 ├── index.html          # Inspection form demo (root)
 ├── styles.css
@@ -113,6 +138,11 @@ field-service-inspection-form-demo/
 │       ├── jobs.json
 │       ├── routing-rules.json
 │       └── technicians.json
+├── requirements-map/   # Workflow Requirements Map demo
+│   ├── index.html
+│   ├── styles.css
+│   ├── app.js
+│   └── requirements-map.json
 ├── README.md
 └── .gitignore
 ```

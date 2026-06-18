@@ -40,6 +40,7 @@
 }
 .portfolio-nav-inner {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.35rem;
   padding: 0.55rem 0;
 }
@@ -151,9 +152,91 @@
   color: #fff;
 }
 .btn-primary:hover { background: var(--portfolio-brand-dark); }
+.btn-secondary {
+  background: #fff;
+  color: var(--portfolio-text);
+  border: 1px solid #cbd5e1;
+}
+.btn-secondary:hover {
+  border-color: var(--portfolio-brand);
+  color: var(--portfolio-brand);
+}
 .btn:focus-visible {
   outline: 2px solid var(--portfolio-brand);
   outline-offset: 2px;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--portfolio-text);
+  background: var(--portfolio-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin: 1.25rem 0 2rem;
+}
+
+.demo-card {
+  padding: 1.15rem 1.25rem;
+  background: var(--portfolio-card);
+  border: 1px solid var(--portfolio-border);
+  border-radius: var(--portfolio-radius);
+  box-shadow: var(--portfolio-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.demo-card-kicker {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--portfolio-muted);
+}
+
+.demo-card-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.demo-card-desc {
+  margin: 0;
+  flex: 1;
+  font-size: 0.8125rem;
+  color: var(--portfolio-muted);
+  line-height: 1.45;
+}
+
+.demo-card .btn {
+  align-self: flex-start;
+  margin-top: 0.35rem;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.portfolio-footer {
+  border-top: 1px solid var(--portfolio-border);
+  padding: 1.25rem 0 2rem;
+  font-size: 0.8125rem;
+  color: var(--portfolio-muted);
+  background: var(--portfolio-card);
+}
+
+.portfolio-footer p {
+  margin: 0;
+  text-align: center;
 }
 
 @media (max-width: 640px) {

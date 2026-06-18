@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Field service portfolio demos — JSON-driven forms, dispatch triage, and requirements traceability.">
+  <meta name="theme-color" content="#0b1220">
+  <title>Field Service Portfolio Demos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="portfolio.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <nav class="portfolio-nav" aria-label="Portfolio demos">
+    <div class="portfolio-nav-inner wrap">
+      <a href="./home.html" class="portfolio-nav-link is-active" aria-current="page">Portfolio home</a>
+      <a href="./" class="portfolio-nav-link">Inspection form</a>
+      <a href="./dispatch/" class="portfolio-nav-link">Dispatch triage</a>
+      <a href="./requirements-map/" class="portfolio-nav-link">Requirements map</a>
+    </div>
+  </nav>
+
+  <header class="header">
+    <div class="wrap header-inner">
+      <div>
+        <p class="kicker">Portfolio demo · Field operations</p>
+        <h1>Field Service Portfolio</h1>
+        <p class="tagline">Three public demos showing how operational requirements become JSON-driven forms, dispatch workflows, and traceable field service behavior.</p>
+      </div>
+      <a class="gh-link" href="https://github.com/rawji/field-service-inspection-form-demo" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <section class="demo-grid" aria-label="Portfolio demos">
+      <article class="demo-card">
+        <p class="demo-card-kicker">Demo 1 · JSON form</p>
+        <h2 class="demo-card-title">Field Service Inspection</h2>
+        <p class="demo-card-desc">JSON schema drives a dynamic inspection form with validation, checklist, sign-off, and structured JSON export.</p>
+        <a class="btn btn-primary btn-sm" href="./">Open inspection demo</a>
+      </article>
+
+      <article class="demo-card">
+        <p class="demo-card-kicker">Demo 2 · JSON routing</p>
+        <h2 class="demo-card-title">Dispatch Triage</h2>
+        <p class="demo-card-desc">FieldOps Desk triage board — route requests, apply JSON rules, assign technicians, and simulate new jobs.</p>
+        <a class="btn btn-primary btn-sm" href="./dispatch/">Open dispatch demo</a>
+      </article>
+
+      <article class="demo-card">
+        <p class="demo-card-kicker">Demo 3 · Traceability</p>
+        <h2 class="demo-card-title">Workflow Requirements Map</h2>
+        <p class="demo-card-desc">Shows how operational requirements translate into form fields, validation logic, conditional behavior, structured JSON output, and internal/customer-facing summaries.</p>
+        <a class="btn btn-primary btn-sm" href="./requirements-map/">View Requirements Map</a>
+      </article>
+    </section>
+  </main>
+
+  <footer class="portfolio-footer">
+    <div class="wrap"><p>Public-safe portfolio demos for Jr. Solutions Engineer and field operations roles.</p></div>
+  </footer>
+</body>
+</html>

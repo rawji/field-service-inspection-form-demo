@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Workflow Requirements Map — how operational requirements become form fields, validation, and structured outputs.">
+  <meta name="theme-color" content="#0b1220">
+  <title>Workflow Requirements Map</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../portfolio.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <nav class="portfolio-nav" aria-label="Portfolio demos">
+    <div class="portfolio-nav-inner wrap">
+      <a href="../home.html" class="portfolio-nav-link">Portfolio home</a>
+      <a href="../" class="portfolio-nav-link">Inspection form</a>
+      <a href="../dispatch/" class="portfolio-nav-link">Dispatch triage</a>
+      <a href="./" class="portfolio-nav-link is-active" aria-current="page">Requirements map</a>
+    </div>
+  </nav>
+
+  <header class="header">
+    <div class="wrap header-inner">
+      <div>
+        <p class="kicker">Portfolio demo · Requirements traceability</p>
+        <h1>Workflow Requirements Map</h1>
+        <p class="tagline">A public demo showing how operational requirements become form fields, validation rules, conditional behavior, structured JSON output, and internal/customer-facing summaries.</p>
+      </div>
+      <a class="gh-link" href="https://github.com/rawji/field-service-inspection-form-demo" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <section class="intro-card" aria-labelledby="intro-heading">
+      <h2 id="intro-heading" class="visually-hidden">About this demo</h2>
+      <p class="intro-text">This page shows how operational requirements are translated into form fields, validation logic, conditional behavior, and structured outputs.</p>
+    </section>
+
+    <section class="panel" aria-labelledby="selector-heading">
+      <h2 id="selector-heading" class="panel-title">Select workflow</h2>
+      <p class="panel-muted">Choose a workflow to view its requirements traceability map.</p>
+      <div id="workflow-selector" class="workflow-selector" role="group" aria-label="Workflow selector"></div>
+    </section>
+
+    <section class="panel" aria-labelledby="workflow-title">
+      <div class="panel-head">
+        <div>
+          <h2 id="workflow-title" class="panel-title">Field Service Inspection</h2>
+          <p id="workflow-description" class="panel-muted"></p>
+        </div>
+        <span id="row-count" class="row-count" aria-live="polite"></span>
+      </div>
+
+      <div class="table-wrap">
+        <table class="req-table">
+          <thead>
+            <tr>
+              <th scope="col">Operational Requirement</th>
+              <th scope="col">Form Field or Behavior</th>
+              <th scope="col">Validation Rule</th>
+              <th scope="col">Output / Summary Impact</th>
+            </tr>
+          </thead>
+          <tbody id="requirements-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="json-heading">
+      <div class="panel-head">
+        <div>
+          <h2 id="json-heading" class="panel-title">Workflow JSON</h2>
+          <p class="panel-muted">Source data from <code>requirements-map.json</code> — one workflow entry per map.</p>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" id="copy-json-btn">Copy workflow JSON</button>
+      </div>
+      <pre id="json-preview" class="json-preview" aria-label="Workflow JSON preview"></pre>
+    </section>
+
+    <nav class="demo-links" aria-label="Related demos">
+      <a class="demo-link-card" href="../">
+        <span class="demo-link-label">Inspection Form Demo</span>
+        <span class="demo-link-desc">JSON schema → validated form → export</span>
+      </a>
+      <a class="demo-link-card" href="../dispatch/">
+        <span class="demo-link-label">Dispatch Triage Demo</span>
+        <span class="demo-link-desc">JSON routing rules → job queue</span>
+      </a>
+      <a class="demo-link-card" href="../home.html">
+        <span class="demo-link-label">Portfolio Home</span>
+        <span class="demo-link-desc">All three demos in one place</span>
+      </a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Workflow Requirements Map — public-safe portfolio demo for solutions engineering roles.</p></div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
