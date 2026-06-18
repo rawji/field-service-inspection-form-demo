@@ -1,0 +1,143 @@
+{
+  "formId": "field-service-inspection",
+  "formTitle": "Field Service Inspection",
+  "version": "1.0.0",
+  "fields": [
+    {
+      "id": "customerName",
+      "label": "Customer Name",
+      "type": "text",
+      "required": true,
+      "placeholder": "Enter customer or company name",
+      "validation": {
+        "minLength": 2,
+        "message": "Customer name is required (at least 2 characters)."
+      }
+    },
+    {
+      "id": "jobSiteLocation",
+      "label": "Job Site Location",
+      "type": "text",
+      "required": true,
+      "placeholder": "Street address, city, or site identifier",
+      "validation": {
+        "minLength": 3,
+        "message": "Job site location is required."
+      }
+    },
+    {
+      "id": "technicianName",
+      "label": "Technician Name",
+      "type": "text",
+      "required": true,
+      "placeholder": "Technician completing this inspection",
+      "validation": {
+        "minLength": 2,
+        "message": "Technician name is required."
+      }
+    },
+    {
+      "id": "serviceDate",
+      "label": "Service Date",
+      "type": "date",
+      "required": true,
+      "validation": {
+        "message": "Service date is required."
+      }
+    },
+    {
+      "id": "equipmentType",
+      "label": "Equipment Type",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select equipment type",
+      "options": [
+        { "value": "crane", "label": "Crane" },
+        { "value": "hvac", "label": "HVAC Unit" },
+        { "value": "lift", "label": "Lift" },
+        { "value": "compressor", "label": "Compressor" },
+        { "value": "other", "label": "Other" }
+      ],
+      "validation": {
+        "message": "Please select an equipment type."
+      }
+    },
+    {
+      "id": "inspectionType",
+      "label": "Inspection Type",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select inspection type",
+      "options": [
+        { "value": "routine", "label": "Routine Inspection" },
+        { "value": "repair-follow-up", "label": "Repair Follow-Up" },
+        { "value": "safety-check", "label": "Safety Check" },
+        { "value": "preventive-maintenance", "label": "Preventive Maintenance" }
+      ],
+      "validation": {
+        "message": "Please select an inspection type."
+      }
+    },
+    {
+      "id": "conditionRating",
+      "label": "Condition Rating",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select condition rating",
+      "options": [
+        { "value": "pass", "label": "Pass" },
+        { "value": "needs-attention", "label": "Needs Attention" },
+        { "value": "fail", "label": "Fail" }
+      ],
+      "validation": {
+        "message": "Please select a condition rating."
+      }
+    },
+    {
+      "id": "priority",
+      "label": "Priority",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select priority level",
+      "options": [
+        { "value": "low", "label": "Low" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "high", "label": "High" },
+        { "value": "critical", "label": "Critical" }
+      ],
+      "validation": {
+        "message": "Please select a priority level."
+      }
+    },
+    {
+      "id": "technicianNotes",
+      "label": "Technician Notes",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Observations, follow-up actions, or additional context",
+      "rows": 4
+    },
+    {
+      "id": "photoRequired",
+      "label": "Photo Required?",
+      "type": "checkbox",
+      "required": false
+    }
+  ],
+  "checklist": {
+    "id": "inspectionChecklist",
+    "label": "Inspection Checklist",
+    "required": true,
+    "minChecked": 1,
+    "validation": {
+      "message": "Complete at least one checklist item."
+    },
+    "items": [
+      { "id": "powersOn", "label": "Equipment powers on" },
+      { "id": "noVisibleDamage", "label": "No visible damage" },
+      { "id": "safetyGuards", "label": "Safety guards in place" },
+      { "id": "emergencyStop", "label": "Emergency stop tested" },
+      { "id": "serviceAreaClear", "label": "Service area clear" }
+    ]
+  }
+}

@@ -1,0 +1,254 @@
+/* Base layout and typography */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --color-bg: #f4f6f8;
+  --color-surface: #ffffff;
+  --color-text: #1f2933;
+  --color-text-muted: #5b6773;
+  --color-border: #d8dee4;
+  --color-primary: #1f6feb;
+  --color-primary-hover: #1858c7;
+  --color-error: #c62828;
+  --color-error-bg: #fdecea;
+  --color-success: #1b7f4a;
+  --color-success-bg: #e8f6ee;
+  --shadow-card: 0 10px 30px rgba(15, 23, 42, 0.08);
+  --radius: 12px;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --max-width: 720px;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.5;
+  color: var(--color-text);
+  background: linear-gradient(180deg, #eef2f7 0%, var(--color-bg) 100%);
+  min-height: 100vh;
+}
+
+.page {
+  width: min(100% - 2rem, var(--max-width));
+  margin: 0 auto;
+  padding: var(--space-xl) 0 3rem;
+}
+
+.page-header {
+  margin-bottom: var(--space-lg);
+}
+
+.page-header h1 {
+  margin: 0 0 var(--space-sm);
+  font-size: clamp(1.6rem, 4vw, 2rem);
+  line-height: 1.2;
+}
+
+.subtitle {
+  margin: 0 0 var(--space-sm);
+  color: var(--color-text-muted);
+  font-size: 1rem;
+}
+
+.demo-note {
+  margin: 0;
+  padding: var(--space-sm) var(--space-md);
+  background: #fff8e6;
+  border: 1px solid #f0d58a;
+  border-radius: 8px;
+  color: #7a5b00;
+  font-size: 0.9rem;
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.card h2 {
+  margin: 0 0 var(--space-md);
+  font-size: 1.2rem;
+}
+
+/* Form fields */
+.form-grid {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.form-field label {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.required-mark {
+  color: var(--color-error);
+  margin-left: 0.15rem;
+}
+
+input[type="text"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font: inherit;
+  color: var(--color-text);
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.15);
+}
+
+input.invalid,
+select.invalid,
+textarea.invalid {
+  border-color: var(--color-error);
+  background: var(--color-error-bg);
+}
+
+.field-error {
+  margin: 0;
+  color: var(--color-error);
+  font-size: 0.85rem;
+  min-height: 1.1rem;
+}
+
+/* Checklist */
+.checklist-section {
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: var(--space-md);
+  background: #fafbfc;
+}
+
+.checklist-section.invalid {
+  border-color: var(--color-error);
+  background: var(--color-error-bg);
+}
+
+.checklist-section legend {
+  font-weight: 600;
+  padding: 0 var(--space-xs);
+}
+
+.checklist-options {
+  display: grid;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+.checkbox-field {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.checkbox-field input {
+  margin-top: 0.2rem;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+.checkbox-field label {
+  font-weight: 400;
+}
+
+/* Submit button */
+.form-actions {
+  margin-top: var(--space-md);
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--color-primary);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+button[type="submit"]:hover {
+  background: var(--color-primary-hover);
+}
+
+button[type="submit"]:active {
+  transform: translateY(1px);
+}
+
+/* Success and preview */
+.success-card {
+  border-color: #b7e0c8;
+  background: var(--color-success-bg);
+}
+
+.success-card h2 {
+  color: var(--color-success);
+}
+
+.json-preview {
+  margin: 0;
+  padding: var(--space-md);
+  background: #0f172a;
+  color: #e2e8f0;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .page {
+    width: min(100% - 1rem, var(--max-width));
+    padding-top: var(--space-lg);
+  }
+
+  .card {
+    padding: var(--space-md);
+  }
+}
