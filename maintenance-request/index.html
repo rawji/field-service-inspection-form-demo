@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Customer Maintenance Request Portal — submit service requests with validation and structured dispatch output.">
+  <meta name="theme-color" content="#0b1220">
+  <title>Customer Maintenance Request Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../portfolio.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <nav class="portfolio-nav" aria-label="Portfolio demos">
+    <div class="portfolio-nav-inner wrap">
+      <a href="../home.html" class="portfolio-nav-link">Portfolio home</a>
+      <a href="../" class="portfolio-nav-link">Inspection form</a>
+      <a href="../dispatch/" class="portfolio-nav-link">Dispatch triage</a>
+      <a href="./" class="portfolio-nav-link is-active" aria-current="page">Maintenance request</a>
+    </div>
+  </nav>
+
+  <header class="header">
+    <div class="wrap header-inner">
+      <div>
+        <p class="kicker">Portfolio demo · Customer-facing intake</p>
+        <h1>Customer Maintenance Request Portal</h1>
+        <p class="tagline">Submit equipment maintenance requests at a job site — validated, structured, and ready for dispatch triage and technician follow-up.</p>
+      </div>
+      <a class="gh-link" href="https://github.com/rawji/field-service-inspection-form-demo" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <section class="quickstart" aria-label="Quick start">
+      <p><strong>New here?</strong> Load a sample request, then submit to see JSON output, dispatch summary, and customer confirmation.</p>
+      <button type="button" class="btn btn-primary btn-sm" id="load-sample-btn">Load sample request</button>
+    </section>
+
+    <div class="layout">
+      <section class="panel form-panel" aria-labelledby="form-heading">
+        <h2 id="form-heading" class="panel-title">Submit maintenance request</h2>
+        <p class="muted">Required fields are marked with <span class="required-mark" aria-hidden="true">*</span>. Demo only — no data is sent to a server.</p>
+
+        <div id="form-error" class="form-error hidden" role="alert"></div>
+
+        <form id="request-form" novalidate>
+          <fieldset class="form-section">
+            <legend>Contact &amp; site</legend>
+            <div class="field-grid">
+              <label class="field">
+                <span>Customer Name <span class="required-mark" aria-hidden="true">*</span></span>
+                <input type="text" id="customerName" name="customerName" required autocomplete="name" placeholder="Your full name">
+              </label>
+              <label class="field">
+                <span>Company / Site Name <span class="required-mark" aria-hidden="true">*</span></span>
+                <input type="text" id="companySiteName" name="companySiteName" required placeholder="Company or facility name">
+              </label>
+              <label class="field field-full">
+                <span>Job Site Address <span class="required-mark" aria-hidden="true">*</span></span>
+                <input type="text" id="jobSiteAddress" name="jobSiteAddress" required placeholder="Street, building, bay, or site identifier">
+              </label>
+              <label class="field">
+                <span>Contact Email <span class="required-mark" aria-hidden="true">*</span></span>
+                <input type="email" id="contactEmail" name="contactEmail" required autocomplete="email" placeholder="you@company.com">
+              </label>
+              <label class="field">
+                <span>Contact Phone <span class="required-mark" aria-hidden="true">*</span></span>
+                <input type="tel" id="contactPhone" name="contactPhone" required autocomplete="tel" placeholder="(555) 000-0000">
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-section">
+            <legend>Equipment &amp; issue</legend>
+            <div class="field-grid">
+              <label class="field">
+                <span>Equipment Type <span class="required-mark" aria-hidden="true">*</span></span>
+                <select id="equipmentType" name="equipmentType" required>
+                  <option value="">Select…</option>
+                  <option>Crane</option>
+                  <option>Lift</option>
+                  <option>HVAC Unit</option>
+                  <option>Compressor</option>
+                  <option>Generator</option>
+                  <option>Other</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>Equipment ID</span>
+                <input type="text" id="equipmentId" name="equipmentId" placeholder="Asset tag (optional)">
+              </label>
+              <label class="field">
+                <span>Issue Type <span class="required-mark" aria-hidden="true">*</span></span>
+                <select id="issueType" name="issueType" required>
+                  <option value="">Select…</option>
+                  <option>Mechanical</option>
+                  <option>Electrical</option>
+                  <option>Safety</option>
+                  <option>Performance</option>
+                  <option>Inspection Request</option>
+                  <option>Unknown</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>Urgency <span class="required-mark" aria-hidden="true">*</span></span>
+                <select id="urgency" name="urgency" required>
+                  <option value="">Select…</option>
+                  <option>Low</option>
+                  <option>Medium</option>
+                  <option>High</option>
+                  <option>Critical</option>
+                </select>
+              </label>
+            </div>
+            <div class="check-row">
+              <label class="check">
+                <input type="checkbox" id="equipmentDown" name="equipmentDown">
+                <span>Is Equipment Down?</span>
+              </label>
+              <label class="check">
+                <input type="checkbox" id="safetyIssue" name="safetyIssue">
+                <span>Is This a Safety Issue?</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-section">
+            <legend>Service details</legend>
+            <label class="field">
+              <span>Preferred Service Window <span class="required-mark" aria-hidden="true">*</span></span>
+              <select id="preferredServiceWindow" name="preferredServiceWindow" required>
+                <option value="">Select…</option>
+                <option>As Soon As Possible</option>
+                <option>Today</option>
+                <option>This Week</option>
+                <option>Next Available</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Request Description <span class="required-mark" aria-hidden="true">*</span></span>
+              <textarea id="requestDescription" name="requestDescription" rows="4" required placeholder="Describe the issue, symptoms, and any relevant context"></textarea>
+            </label>
+            <label class="field">
+              <span>Photo / Attachment Note</span>
+              <textarea id="attachmentNote" name="attachmentNote" rows="2" placeholder="Note any photos or documents (demo only — no file upload)"></textarea>
+            </label>
+          </fieldset>
+
+          <fieldset class="form-section escalation-section hidden" id="escalation-section" aria-labelledby="escalation-heading">
+            <legend id="escalation-heading">Escalation contact</legend>
+            <p class="escalation-note">Required for critical urgency, equipment down, or safety-related requests.</p>
+            <div class="field-grid">
+              <label class="field">
+                <span>Escalation Contact Name <span class="required-mark" aria-hidden="true">*</span></span>
+                <input type="text" id="escalationContactName" name="escalationContactName" placeholder="On-site supervisor or manager">
+              </label>
+              <label class="field">
+                <span>Escalation Contact Phone <span class="required-mark" aria-hidden="true">*</span></span>
+                <input type="tel" id="escalationContactPhone" name="escalationContactPhone" placeholder="Direct line for urgent follow-up">
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary btn-sm" id="clear-form-btn">Clear form</button>
+            <button type="submit" class="btn btn-primary">Submit Request</button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="results-column" id="results-column" aria-live="polite">
+        <section class="panel results-placeholder" id="results-placeholder">
+          <h2 class="panel-title">Submission results</h2>
+          <p class="muted no-margin">Complete and submit the form to see structured JSON, dispatch summary, customer confirmation, and priority recommendation.</p>
+        </section>
+
+        <section class="panel success-panel hidden" id="success-panel" hidden>
+          <div class="success-badge" aria-hidden="true">✓</div>
+          <h2 class="panel-title">Maintenance request submitted successfully.</h2>
+          <p class="priority-rec" id="priority-rec"></p>
+
+          <div class="summary-box summary-internal">
+            <h3>Internal dispatch summary</h3>
+            <p id="internal-summary"></p>
+          </div>
+
+          <div class="summary-box summary-customer">
+            <h3>Customer confirmation</h3>
+            <p id="customer-summary"></p>
+          </div>
+
+          <div class="json-block">
+            <div class="json-head">
+              <h3>Submitted JSON preview</h3>
+              <button type="button" class="btn btn-secondary btn-sm" id="copy-json-btn">Copy JSON</button>
+            </div>
+            <pre id="json-preview" class="code-sm"></pre>
+          </div>
+
+          <div class="ops-map">
+            <h3>How this maps to operations</h3>
+            <ul>
+              <li>Customer request becomes structured JSON for dispatch systems.</li>
+              <li>Required fields reduce missing information before triage.</li>
+              <li>Conditional escalation fields capture urgent cases.</li>
+              <li>Internal summary helps operations prioritize and route work.</li>
+              <li>Customer summary confirms receipt in plain language.</li>
+            </ul>
+          </div>
+
+          <button type="button" class="btn btn-ghost btn-sm" id="new-request-btn">Submit another request</button>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Customer Maintenance Request Portal — public-safe portfolio demo for solutions engineering roles.</p></div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

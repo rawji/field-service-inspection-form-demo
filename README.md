@@ -1,13 +1,13 @@
 # Field Service Portfolio Demos
 
-Three public portfolio demos showing how operational field service requirements become **JSON-driven workflows** — an inspection form, a dispatch triage board, and a requirements traceability map.
+Three public portfolio demos showing how operational field service requirements become **JSON-driven workflows** — an inspection form, a dispatch triage board, and a customer maintenance request portal.
 
 | Demo | URL | What it shows |
 | --- | --- | --- |
 | **Portfolio home** | [Live demo (`/home.html`)](https://rawji.github.io/field-service-inspection-form-demo/home.html) | Hub with links to all three demos |
 | **Inspection form** | [Live demo (root)](https://rawji.github.io/field-service-inspection-form-demo/) | JSON schema → dynamic form, validation, checklist, JSON export |
 | **Dispatch triage** (FieldOps Desk) | [Live demo (`/dispatch/`)](https://rawji.github.io/field-service-inspection-form-demo/dispatch/) | JSON routing rules → job queue, triage, assignment, simulation |
-| **Workflow Requirements Map** | [Live demo (`/requirements-map/`)](https://rawji.github.io/field-service-inspection-form-demo/requirements-map/) | Requirements → fields, validation, outputs (traceability) |
+| **Maintenance request** | [Live demo (`/maintenance-request/`)](https://rawji.github.io/field-service-inspection-form-demo/maintenance-request/) | Customer intake → JSON, dispatch summary, confirmation, priority |
 
 ---
 
@@ -82,7 +82,7 @@ This demo maps directly to Jr. Solutions Engineer responsibilities:
 - **Portfolio home:** [rawji.github.io/field-service-inspection-form-demo/home.html](https://rawji.github.io/field-service-inspection-form-demo/home.html)
 - **Inspection form:** [rawji.github.io/field-service-inspection-form-demo](https://rawji.github.io/field-service-inspection-form-demo/)
 - **Dispatch triage:** [rawji.github.io/field-service-inspection-form-demo/dispatch](https://rawji.github.io/field-service-inspection-form-demo/dispatch/)
-- **Requirements map:** [rawji.github.io/field-service-inspection-form-demo/requirements-map](https://rawji.github.io/field-service-inspection-form-demo/requirements-map/)
+- **Maintenance request:** [rawji.github.io/field-service-inspection-form-demo/maintenance-request](https://rawji.github.io/field-service-inspection-form-demo/maintenance-request/)
 
 Open `index.html` or `home.html` locally, or view on GitHub Pages after enabling Pages for the `main` branch in repo settings.
 
@@ -102,21 +102,21 @@ No install step, build tools, or dependencies are required.
 
 ---
 
-# Workflow Requirements Map
+# Customer Maintenance Request Portal
 
-This demo demonstrates **requirements traceability**. It shows how customer and operational needs become form fields, validation rules, conditional logic, structured JSON output, and internal/customer-facing summaries.
-
-This is relevant to solutions engineering because the role requires translating customer success, implementation, and customer requirements into working forms and internal tools.
+This demo shows how a **customer-facing service request** can be converted into structured operational data for dispatch, triage, and technician follow-up. It includes required field validation, conditional escalation fields, submitted JSON preview, internal dispatch summary, customer confirmation summary, and priority recommendation logic.
 
 ## What it shows
 
-- Three workflow maps: **Field Service Inspection**, **Dispatch Triage**, and **Maintenance Request**
-- Responsive requirements table with four columns per row
-- Workflow selector to switch map content instantly
-- JSON source preview with copy button
-- Links to the live inspection and dispatch demos
+- Customer maintenance request form with contact, site, equipment, and issue fields
+- Conditional escalation contact fields when urgency is Critical, equipment is down, or safety is flagged
+- Success message with **priority recommendation** (Critical Dispatch Review, High Priority Follow-Up, etc.)
+- **Internal dispatch summary** for operations teams
+- **Customer confirmation** in plain language
+- **Submitted JSON preview** with copy button
+- Brief “How this maps to operations” reference card
 
-**Recruiter tip:** Open the Requirements Map, switch between workflows, and compare rows to the live form and dispatch demos.
+**Recruiter tip:** Click **Load sample request**, then **Submit Request** to see the full intake workflow in under 10 seconds.
 
 ---
 
@@ -138,11 +138,11 @@ field-service-inspection-form-demo/
 │       ├── jobs.json
 │       ├── routing-rules.json
 │       └── technicians.json
-├── requirements-map/   # Workflow Requirements Map demo
+├── maintenance-request/  # Customer Maintenance Request Portal
 │   ├── index.html
 │   ├── styles.css
 │   ├── app.js
-│   └── requirements-map.json
+│   └── request-schema.json
 ├── README.md
 └── .gitignore
 ```

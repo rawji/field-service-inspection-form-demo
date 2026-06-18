@@ -1,0 +1,45 @@
+{
+  "formId": "customer-maintenance-request",
+  "formTitle": "Customer Maintenance Request Portal",
+  "version": "1.0.0",
+  "description": "Customer-facing maintenance request intake with conditional escalation fields.",
+  "escalationTriggers": {
+    "urgencyCritical": true,
+    "equipmentDown": true,
+    "safetyIssue": true
+  },
+  "requiredFields": [
+    "customerName",
+    "companySiteName",
+    "jobSiteAddress",
+    "contactEmail",
+    "contactPhone",
+    "equipmentType",
+    "issueType",
+    "urgency",
+    "preferredServiceWindow",
+    "requestDescription"
+  ],
+  "conditionalRequiredFields": [
+    "escalationContactName",
+    "escalationContactPhone"
+  ],
+  "sampleData": {
+    "customerName": "Jordan Ellis",
+    "companySiteName": "Riverside Industrial — Plant 1",
+    "jobSiteAddress": "1200 Harbor Road, Building C, Bay 4",
+    "contactEmail": "j.ellis@example.com",
+    "contactPhone": "(555) 412-9081",
+    "equipmentType": "HVAC Unit",
+    "equipmentId": "HVAC-44",
+    "issueType": "Performance",
+    "urgency": "High",
+    "equipmentDown": true,
+    "safetyIssue": false,
+    "preferredServiceWindow": "As Soon As Possible",
+    "requestDescription": "Rooftop unit not maintaining setpoint. Production area temperature rising.",
+    "attachmentNote": "Photo of unit display available on request — demo only, no upload.",
+    "escalationContactName": "M. Chen",
+    "escalationContactPhone": "(555) 412-9000"
+  }
+}
